@@ -1,85 +1,56 @@
-# Rimworld Stargate
-WARNING: This mod uses the Rimworld Base Save Functionality in ways that it was never designed to support, 
-mainly saving specific things into a separate file instead of saving everything on the map to one file at 
-once. Because of this there may be adverse effects. The main one that I have found is that after traveling 
-through the Stargate Social opinions relating to that colonist will be lost, they will effectively be 
-meeting everyone for the first time again. At this time I do not know of a practical way to resolve this issue.
+# Rimworld Dematerializer
 
-The Stargate system allows you to transport materials over the great distances between colonies.
+![Atlantean Teleporter Room](https://raw.githubusercontent.com/BetterRimworlds/TeleporterRoom/trunk/TeleporterRoom/About/Preview.png)
+
+The Teleporter Room allows you to teleport materials and pawns on the current map directly into another 
+Teleporter Room, anywhere on the Planet.
+
+When solar storms occur, the Teleporter Room is fully powered by the solar wind.
+
+Conditions for a functional Teleporter Room:
+
+1. It must be placed in a room that is at least 6x6 to fully fit the Teleporter.
+2. The Room must not be bigger than 12x24 (288 cells).
+3. The Room must be completely surrounded by Plasteel walls and doors, to facilitate the Zero-Point Energy transfer.
+4. The Room must be completely roofed. No unroofed tiles.
+5. The Room's floor must be completely covered in Sterile Tiles.
+6. All requirements also apply for the remote Teleporter Room, as well.
 
 ## Change Log
 
-01.00.00
+**v1.0.0: 2024-04-16**
 * Initial Release
 
-01.00.01
-* Fixing crash when loading with Stargates that locally have things in the Buffer.
+## Better Rimworlds Stargate Mods
 
-02.00.00
-* Alpha 14 Update
+1. [**Stargate**](https://github.com/BetterRimworlds/Stargate) — Send Pawns and Items to other Savegames on the same computer.
+2. [**CryoRegenesis**](https://github.com/BetterRimworlds/CryoRegenesis) — Forever Young Glittertech (a Rimworld take on the Goa'uld Sarcophagus).
+3. [**ZPM**](https://github.com/BetterRimworlds/ZPM) — Build your own or buy an Archotech Zero-Point Module (Stargate Atlantis).
+4. [**ZatGun**](https://github.com/BetterRimworlds/ZatGun) — An actual Zat'nik'tel, from the Stargate Universe. One shot stuns. Two shots kills.
 
-02.00.01
-* Fix for potentially not loading Graphical Resources on loading a saved game.
+## Other Better Rimworlds Mods
 
-02.00.02
-* Building against 1249
-
-02.00.03
-* Alpha 15 Update (only had to change the supported version number)
-
-02.00.04
-* Alpha 16 Update (lots of small compatibility changes, esp regarding multiple maps).
-
-03.00.00
-* Alpha 16: Reworked the Offworld Gate so that when it's activated, all higher 
-  lifeforms on the map are damaged by a huge psionic blast.
-
---------------------------------------------------------------------------------------
-
-04.00.00
-* Officially forked from jaxxa/ED-Stargate.
-
-04.01.00
-* Alpha 17 Update (v0.17.1557)
-
-04.02.00
-* Beta 18 Update (v0.18.1722)
-
-04.03.00
-* Beta 19 Update (v0.19.2009)
-
-04.04.00
-* v1.0 Update (v1.0.2559)
-* Fixed the "inspect string for * contains empty lines" console error.
-* Fixed all of the "can't assign items to a faction" error messages.
-* Fixed the bug since B19 where colonists went *crazy* if they had ever been drafted.
-
-05.00.00
-* Made the Stargate research much more difficult to achieve.
-* The Off-world Gate will no longer allow outgoing travel.
-* The Off-world Gate now falls into ruin upon the first off-world recall.
-* The cost for constructing the Stargate has been greatly, and appropriately, increased.
-* Only one Off-world Gate is allowed per area.
-* Lots of code cleanup.
-
-06.00.00
-* Upgraded to C# v8.0.
-* Disorient, sicken or kill nearly every pawn on the map after activating an Transdimensional Stargate.
-* [Fixed] Fixed Humans being afflicted with Wormhole Insanity Disorder.
-* Created a new StargateBuffer to hold Things in Rimworld v1.0 fashion.
-* Stop drawing power if the circuits are full.
-* Added a Stargate Network system.
-* Added Teleportation between on-world gates.
-* Changes necessary for Rimworld v1.2.
-* Made Stargates substantially more expensive to build.
-* [Fixed] Colonists' max-XP-per-day now resets after jumping through a gate.
-* You can now view the contents of the Stargate's outgoing buffer!
-* Limit the number of item sets held in the stargate buffer to 500.
-
+1. [**WakeUp Implant**](https://github.com/BetterRimworlds/WakeUpImplant) — Installs a brain implant that gives the effects of a permanent wakeup high.
+2. [**Savegame Shrinker**](https://github.com/BetterRimworlds/RimworldSavegameShrinker) — Cleans up unnecessary data from long-running Savegames.
+3. [**DeMaterializer**](https://github.com/BetterRimworlds/DeMaterializer) — Precursor to teleportation. Late-stage raid defense system.
 
 ## Contributors
 
-This mod is forked off of the incredible engineering work by Jaxxa in his [**ED-Stargate mod**](https://github.com/jaxxa/ED-Stargate).
-I asked him for years to port this to A16, but then I learned C# and ported it myself ;-)
+This mod is forked off of the incredible [**Stargate mod**](https://github.com/BetterRimworlds/Stargate).
 
-Then I made it even better!
+# Contributors
+
+[Theodore R. Smith](https://github.com/hopeseekr/]) <hopeseekr@gmail.com>  
+GPG Fingerprint: D8EA 6E4D 5952 159D 7759  2BB4 EEB6 CE72 F441 EC41  
+WhatsApp / Signal: +1 832-303-9477
+
+## License
+
+**CC-BY-ND-4.0**
+Creative Commons NoDerivations v4.0: Please see the [license file](LICENSE.md) for more information.
+
+**YOU MAY FORK THIS PROJECT.**
+
+**YOU MAY NOT PUBLISH ANY DERIVATION of this project to either your own website or a third-party host.**
+
+**YOU MAY NOT PUBLISH ANY DERIVATION ON STEAM WORKSHOP WITHOUT EXPLICIT APPROVAL.**
