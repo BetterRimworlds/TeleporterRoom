@@ -363,6 +363,16 @@ namespace BetterRimworlds.TeleporterRoom
                 rejectReasons += $"The room of the destination Teleporter ({teleporter.Name}) has {remoteRoom.OpenRoofCount} missing roof tiles (use Room Stats tool to debug).\n";
             }
 
+            if (PlaceWorker_OnlyOneTeleporterRoom.isPlasteelWall(this.Map, localRoom) == false)
+            {
+                rejectReasons += "This teleporter room's walls are not made completely of Plasteel.\n";
+            }
+
+            if (PlaceWorker_OnlyOneTeleporterRoom.isPlasteelWall(teleporter.Map, remoteRoom) == false)
+            {
+                rejectReasons += "The remote teleporter room's walls are not made completely of Plasteel.\n";
+            }
+
             if (rejectReasons == "")
             {
                 return "OK";

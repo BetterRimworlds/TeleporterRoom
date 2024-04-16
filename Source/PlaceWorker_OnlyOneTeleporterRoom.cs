@@ -61,7 +61,33 @@ namespace BetterRimworlds.TeleporterRoom
                 rejectReasons.Add($"The room of this Teleporter has {room?.OpenRoofCount} missing roof tiles (use Room Stats tool to debug).");
             }
 
+            if (rejected || PlaceWorker_OnlyOneTeleporterRoom.isPlasteelWall(map, room) == false)
+            {
+                rejectReasons.Add("The room's walls must be made completely of Plasteel.");
+            }
+
             return rejectReasons.Count == 0 ? true : String.Join("\n", rejectReasons);
+        }
+
+        public static bool isPlasteelWall(Map map, Room room)
+        {
+            // Log.Warning("Border Cells: " + String.Join(", ", room.BorderCells));
+            foreach (IntVec3 borderPosition in room.BorderCells)
+            {
+                var wall = borderPosition.GetEdifice(map);
+
+                if (wall == null) return false;
+
+                if ((wall.def != ThingDefOf.Wall || wall.def != ThingDefOf.Door || wall.def.defName != "Teleporter")
+                    && (wall.def.defName != "Teleporter" && wall.Stuff != ThingDefOf.Plasteel))
+                {
+                    Log.Warning(borderPosition + " : " + wall?.def + " (" + wall?.def?.defName + ") Stuff: " + wall?.Stuff?.defName);
+                    return false;
+                }
+
+            }
+
+            return true;
         }
     }
 }
