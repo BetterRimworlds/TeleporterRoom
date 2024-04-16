@@ -36,7 +36,32 @@ namespace BetterRimworlds.TeleporterRoom
                 return "You can only build one Teleporter per map.";
             }
 
-            return true;
+            // Log.Warning("1");
+
+            // Check for the Teleporter Room requirements.
+            var room = RegionAndRoomQuery.RoomAt(new IntVec3(loc.x, loc.y, loc.z + 2), map);
+
+            bool rejected = false;
+            if (room == null || room?.CellCount > 15_000)
+            {
+                rejected = true;
+                rejectReasons.Add("The Teleporter must be placed inside a Room (use Room Stats tool to debug).");
+            }
+
+            if (rejected || room?.CellCount > 288)
+            {
+                rejected = true;
+                rejectReasons.Add($"The room of this Teleporter is too big (12x24, or 288 max cells).");
+            }
+
+            if (rejected || room?.OpenRoofCount > 0)
+            {
+                rejected = true;
+
+                rejectReasons.Add($"The room of this Teleporter has {room?.OpenRoofCount} missing roof tiles (use Room Stats tool to debug).");
+            }
+
+            return rejectReasons.Count == 0 ? true : String.Join("\n", rejectReasons);
         }
     }
 }

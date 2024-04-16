@@ -330,6 +330,48 @@ namespace BetterRimworlds.TeleporterRoom
             return localRoom;
         }
 
+        protected string validateTeleporterRooms(Room localRoom, Room remoteRoom, Building_Teleporter teleporter)
+        {
+            string rejectReasons = "";
+            if (localRoom == null)
+            {
+                rejectReasons += "This Teleporter is not inside a Room (use Room Stats tool to debug).\n";
+            }
+
+            if (remoteRoom == null)
+            {
+                rejectReasons += $"The destination Teleporter ({teleporter.Name}) is not inside a Room (use Room Stats tool to debug).\n";
+            }
+
+            if (localRoom.CellCount > 288)
+            {
+                rejectReasons += "The room of this Teleporter is too big (12x24, or 288 max cells).\n";
+            }
+
+            if (remoteRoom.CellCount > 288)
+            {
+                rejectReasons += $"The room of the destination Teleporter ({teleporter.Name}) is too big (12x24, or 288 max cells).\n";
+            }
+
+            if (localRoom.OpenRoofCount > 0)
+            {
+                rejectReasons += $"The room of this Teleporter has {localRoom.OpenRoofCount} missing roof tiles (use Room Stats tool to debug).\n";
+            }
+
+            if (remoteRoom.OpenRoofCount > 0)
+            {
+                rejectReasons += $"The room of the destination Teleporter ({teleporter.Name}) has {remoteRoom.OpenRoofCount} missing roof tiles (use Room Stats tool to debug).\n";
+            }
+
+            if (rejectReasons == "")
+            {
+                return "OK";
+            }
+
+            // Strip out the last \n.
+            return rejectReasons.Remove(rejectReasons.Length - 1);
+        }
+
         public void Teleport(Building_Teleporter teleporter, bool isRemoteTeleporter = false)
         {
             if (!this.fullyCharged && !isRemoteTeleporter)
@@ -355,6 +397,15 @@ namespace BetterRimworlds.TeleporterRoom
 
             // Log.Error("Room ID: " + localRoom?.ID);
             // Log.Warning("Local Room info: " + localRoom + " | Remote Room info: " + remoteRoom);
+
+            var rejectReasons = this.validateTeleporterRooms(localRoom, remoteRoom, teleporter);
+            if (rejectReasons != "OK")
+            {
+                Messages.Message(rejectReasons, MessageTypeDefOf.RejectInput);
+                return;
+            }
+
+            // End validation
 
             if (isRemoteTeleporter == false)
             {
