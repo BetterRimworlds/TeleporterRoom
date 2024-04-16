@@ -28,7 +28,10 @@ namespace BetterRimworlds.TeleporterRoom
     {
         const int ADDITION_DISTANCE = 3;
 
+        private int? Countdown = null;
         public bool PoweringUp = true;
+
+        private Building_Teleporter destination;
 
         // protected static List<Building_Teleporter> TeleporterNetwork = new List<Building_Teleporter>();
         protected TeleporterBuffer teleporterBuffer;
@@ -43,7 +46,6 @@ namespace BetterRimworlds.TeleporterRoom
         protected static Texture2D UI_POWER_UP;
         protected static Texture2D UI_POWER_DOWN;
 
-        static Graphic graphicActive;
         static Graphic graphicInactive;
 
         private bool isPowerInited = false;
@@ -71,15 +73,10 @@ namespace BetterRimworlds.TeleporterRoom
             UI_POWER_DOWN = ContentFinder<Texture2D>.Get("UI/PowerDown", true);
 
         #if RIMWORLD12
-            GraphicRequest requestActive = new GraphicRequest(Type.GetType("Graphic_Single"), "Things/Buildings/Teleporter-Active",   ShaderDatabase.DefaultShader, new Vector2(3, 3), Color.white, Color.white, new GraphicData(), 0, null);
             GraphicRequest requestInactive = new GraphicRequest(Type.GetType("Graphic_Single"), "Things/Buildings/Teleporter", ShaderDatabase.DefaultShader, new Vector2(3, 3), Color.white, Color.white, new GraphicData(), 0, null);
         #else
-            GraphicRequest requestActive = new GraphicRequest(Type.GetType("Graphic_Single"), "Things/Buildings/Teleporter-Active",   ShaderDatabase.DefaultShader, new Vector2(3, 3), Color.white, Color.white, new GraphicData(), 0, null, null);
             GraphicRequest requestInactive = new GraphicRequest(Type.GetType("Graphic_Single"), "Things/Buildings/Teleporter", ShaderDatabase.DefaultShader, new Vector2(3, 3), Color.white, Color.white, new GraphicData(), 0, null, null);
         #endif
-
-            graphicActive = new Graphic_Single();
-            graphicActive.Init(requestActive);
 
             graphicInactive = new Graphic_Single();
             graphicInactive.Init(requestInactive);
@@ -262,6 +259,22 @@ namespace BetterRimworlds.TeleporterRoom
                 }
             }
 
+            if (this.Countdown > 0)
+            {
+                --this.Countdown;
+            }
+
+            if (this.Countdown <= 1)
+            {
+                this.DoBlastVisual();
+            }
+
+            if (this.Countdown <= 0)
+            {
+                this.Teleport(this.destination);
+                this.Countdown = null;
+            }
+
             base.TickRare();
         }
 
@@ -301,7 +314,7 @@ namespace BetterRimworlds.TeleporterRoom
 
                     Command_Action act = new Command_Action();
                     //act.action = () => Designator_Deconstruct.DesignateDeconstruct(this);
-                    act.action = () => this.Teleport(teleporter);
+                    act.action = () => this.InitiateTeleport(teleporter);
                     act.icon = UI_GATE_IN;
                     act.defaultLabel = "Send to " + teleporter.Name;
                     act.defaultDesc = "Teleport";
@@ -319,6 +332,27 @@ namespace BetterRimworlds.TeleporterRoom
         public bool HasThingsInBuffer()
         {
             return this.teleporterBuffer.Count > 0;
+        }
+
+        protected void InitiateTeleport(Building_Teleporter teleporter)
+        {
+            if (this.fullyCharged == false)
+            {
+                return;
+            }
+
+            var localRoom = this.GetRoom();
+            var remoteRoom = teleporter.GetRoom();
+
+            var rejectReasons = this.validateTeleporterRooms(localRoom, remoteRoom, teleporter);
+            if (rejectReasons != "OK")
+            {
+                Messages.Message(rejectReasons, MessageTypeDefOf.RejectInput);
+                return;
+            }
+
+            this.Countdown ??= 2;
+            this.destination = teleporter;
         }
 
         public Room GetRoom()
@@ -541,6 +575,22 @@ namespace BetterRimworlds.TeleporterRoom
         {
             this.power.PowerOutput = -1 * extraPower;
             return true;
+        }
+
+        private void DoBlastVisual()
+        {
+            var cell = this.Position;
+            // Mote mote = (Mote)ThingMaker.MakeThing(ThingDefOf.Mote_PsycastAreaEffect, null);
+            Mote mote = (Mote)ThingMaker.MakeThing(ThingDefOf.Mote_Bombardment, null);
+            // mote.Scale = (-80f * this.Countdown ?? 0) + 800f + 180f;
+            mote.Scale = (-10f * this.Countdown ?? 0) + 100f + 10f;
+            mote.rotationRate = Rand.Range(-3f, 3f);
+            mote.exactPosition = cell.ToVector3Shifted() + new Vector3(Rand.Value - 0.5f, 0f, Rand.Value - 0.5f);
+
+            // mote.instanceColor = new Color(0, 120/255.0f, 1.0f);
+            mote.instanceColor = new Color(0.9f, 0.9f, 0.7f);
+
+            GenSpawn.Spawn((Thing) mote, cell, this.Map);
         }
 
         public string RenamableLabel { get => this.Name; set => this.Name = value; }
