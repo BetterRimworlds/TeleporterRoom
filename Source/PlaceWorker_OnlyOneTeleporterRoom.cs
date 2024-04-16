@@ -66,6 +66,11 @@ namespace BetterRimworlds.TeleporterRoom
                 rejectReasons.Add("The room's walls must be made completely of Plasteel.");
             }
 
+            if (rejected || PlaceWorker_OnlyOneTeleporterRoom.isSterileFloor(map, room) == false)
+            {
+                rejectReasons.Add("The room's floors must be made completely of Sterile Tile.");
+            }
+
             return rejectReasons.Count == 0 ? true : String.Join("\n", rejectReasons);
         }
 
@@ -81,10 +86,25 @@ namespace BetterRimworlds.TeleporterRoom
                 if ((wall.def != ThingDefOf.Wall || wall.def != ThingDefOf.Door || wall.def.defName != "Teleporter")
                     && (wall.def.defName != "Teleporter" && wall.Stuff != ThingDefOf.Plasteel))
                 {
-                    Log.Warning(borderPosition + " : " + wall?.def + " (" + wall?.def?.defName + ") Stuff: " + wall?.Stuff?.defName);
+                    // Log.Warning(borderPosition + " : " + wall?.def + " (" + wall?.def?.defName + ") Stuff: " + wall?.Stuff?.defName);
                     return false;
                 }
 
+            }
+
+            return true;
+        }
+
+        public static bool isSterileFloor(Map map, Room room)
+        {
+            // Log.Warning("Floor Cells: " + String.Join(", ", room.Cells));
+            foreach (IntVec3 floorCell in room.Cells)
+            {
+                if (floorCell.GetTerrain(map).defName != "SterileTile")
+                {
+                    Log.Warning(floorCell + " Terrain Def Name: " + floorCell.GetTerrain(map).defName);
+                    return false;
+                }
             }
 
             return true;

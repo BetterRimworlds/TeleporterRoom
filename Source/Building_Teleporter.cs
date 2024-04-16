@@ -373,6 +373,16 @@ namespace BetterRimworlds.TeleporterRoom
                 rejectReasons += "The remote teleporter room's walls are not made completely of Plasteel.\n";
             }
 
+            if (PlaceWorker_OnlyOneTeleporterRoom.isSterileFloor(this.Map, localRoom) == false)
+            {
+                rejectReasons += "This teleporter room's floors are not made completely of Sterile Tile.\n";
+            }
+
+            if (PlaceWorker_OnlyOneTeleporterRoom.isSterileFloor(teleporter.Map, remoteRoom) == false)
+            {
+                rejectReasons += "The remote teleporter room's floors are not made completely of Sterile Tile.\n";
+            }
+
             if (rejectReasons == "")
             {
                 return "OK";
