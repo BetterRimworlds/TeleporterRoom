@@ -1,5 +1,5 @@
 ﻿/*
- * This file is part of Dematerializer, a Better Rimworlds Project.
+ * This file is part of Teleporter Room, a Better Rimworlds Project.
  *
  * Copyright © 2024 Theodore R. Smith
  * Author: Theodore R. Smith <hopeseekr@gmail.com>
