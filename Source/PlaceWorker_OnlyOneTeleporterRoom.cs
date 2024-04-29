@@ -49,10 +49,10 @@ namespace BetterRimworlds.TeleporterRoom
                 rejectReasons.Add("The Teleporter must be placed inside a Room (use Room Stats tool to debug).");
             }
 
-            if (rejected || room?.CellCount > 288)
+            if (rejected || room?.CellCount > 300)
             {
                 rejected = true;
-                rejectReasons.Add($"The room of this Teleporter is too big (12x24, or 288 max cells).");
+                rejectReasons.Add($"The room of this Teleporter is too big (12x25, or 300 max cells).");
             }
 
             if (rejected || room?.OpenRoofCount > 0)

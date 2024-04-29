@@ -378,14 +378,14 @@ namespace BetterRimworlds.TeleporterRoom
                 rejectReasons += $"The destination Teleporter ({teleporter.Name}) is not inside a Room (use Room Stats tool to debug).\n";
             }
 
-            if (localRoom.CellCount > 288)
+            if (localRoom.CellCount > 300)
             {
-                rejectReasons += "The room of this Teleporter is too big (12x24, or 288 max cells).\n";
+                rejectReasons += "The room of this Teleporter is too big (12x25, or 300 max cells).\n";
             }
 
-            if (remoteRoom.CellCount > 288)
+            if (remoteRoom.CellCount > 300)
             {
-                rejectReasons += $"The room of the destination Teleporter ({teleporter.Name}) is too big (12x24, or 288 max cells).\n";
+                rejectReasons += $"The room of the destination Teleporter ({teleporter.Name}) is too big (12x25, or 300 max cells).\n";
             }
 
             if (localRoom.OpenRoofCount > 0)
