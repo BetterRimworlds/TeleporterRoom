@@ -1,9 +1,11 @@
 # Rimworld Dematerializer
 
-![Atlantean Teleporter Room](https://raw.githubusercontent.com/BetterRimworlds/TeleporterRoom/trunk/TeleporterRoom/About/Preview.png)
+[![Atlantean Teleporter Room Demo](https://raw.githubusercontent.com/BetterRimworlds/TeleporterRoom/trunk/TeleporterRoom/About/Preview.png)](https://youtu.be/tGBTEr2PZH4)
 
 The Teleporter Room allows you to teleport materials and pawns on the current map directly into another 
 Teleporter Room, anywhere on the Planet.
+
+[**Demo Video**](https://youtu.be/tGBTEr2PZH4)
 
 When solar storms occur, the Teleporter Room is fully powered by the solar wind.
 
@@ -16,9 +18,11 @@ Conditions for a functional Teleporter Room:
 5. The Room's floor must be completely covered in Sterile Tiles.
 6. All requirements also apply for the remote Teleporter Room, as well.
 
+
+
 ## Change Log
 
-**v1.0.0: 2024-04-16**
+**v1.0.0: 2024-04-29**
 * Initial Release
 
 ## Better Rimworlds Stargate Mods
