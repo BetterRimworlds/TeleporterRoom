@@ -25,8 +25,8 @@
         <specialDisplayRadius>3</specialDisplayRadius>
         <tickerType>Rare</tickerType>
         <statBases>
-            <WorkToBuild>20000</WorkToBuild>
-            <MaxHitPoints>10000</MaxHitPoints>
+            <WorkToBuild>10000</WorkToBuild>
+            <MaxHitPoints>5000</MaxHitPoints>
             <Flammability>0.0</Flammability>
         </statBases>
         <description>Teleporter</description>
@@ -46,14 +46,14 @@
         </comps>
         <size>(3,3)</size>
         <costList>
-            <Steel>2000</Steel>
-            <Uranium>500</Uranium>
-            <Plasteel>2000</Plasteel>
-            <Gold>2000</Gold>
-            <AIPersonaCore>1</AIPersonaCore>
-            <ComponentIndustrial>5</ComponentIndustrial>
-            <ComponentSpacer>25</ComponentSpacer>
-            <Luciferium>100</Luciferium>
+            <Steel>1000</Steel>
+            <Uranium>150</Uranium>
+            <Plasteel>500</Plasteel>
+            <Gold>500</Gold>
+            <!--<AIPersonaCore>1</AIPersonaCore>-->
+            <ComponentIndustrial>25</ComponentIndustrial>
+            <ComponentSpacer>5</ComponentSpacer>
+            <Luciferium>5</Luciferium>
         </costList>
         <constructionSkillPrerequisite>15</constructionSkillPrerequisite>
         <hasInteractionCell>False</hasInteractionCell>
