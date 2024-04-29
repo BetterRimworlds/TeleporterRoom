@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <ModMetaData>
     <name>Teleporter Room</name>
     <packageId>HopeSeekr.BetterRimworlds.TeleporterRoom</packageId>
@@ -10,10 +10,9 @@
     </supportedVersions>
     <author>HopeSeekr</author>
     <url>https://github.com/BetterRimworlds/TeleporterRoom/</url>
-    <description>Version 6
+    <description>Version 1.0
 The BetterRimworlds Teleporter Room enables the teleportation of any Pawns and Things inside the teleport room
 instantaneously, anywhere on the planet.
 
-**ALERT: The Dematerializer has *harsh* consequences for all higher lifeforms on the map in the case of power failure!**
-    </description>
+A fully-functional Atlantean Teleporter Room: Teleports pawns and things anywhere in the world!    </description>
 </ModMetaData>
