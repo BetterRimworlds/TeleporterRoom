@@ -29,6 +29,7 @@ namespace BetterRimworlds.TeleporterRoom
         #if RIMWORLD15
         public Dialog_NameTeleporterRoom(Building_Teleporter renaming): base(renaming)
         {
+            curName = ((IRenameable)renaming).RenamableLabel;
         }
         #else
         public Dialog_NameTeleporterRoom(Building_Teleporter teleporter)
@@ -40,6 +41,7 @@ namespace BetterRimworlds.TeleporterRoom
 
         protected override int MaxNameLength => 24;
 
+#if !RIMWORLD15
         public override void DoWindowContents(Rect inRect)
         {
             var titleRect = new Rect(inRect.x, inRect.y, inRect.width, 40);
@@ -82,11 +84,10 @@ namespace BetterRimworlds.TeleporterRoom
             return true;
         }
 
-        #if !RIMWORLD15
         protected override void SetName( string name )
         {
             this.teleporter.Name = name;
         }
-        #endif
+    #endif
     }
 }

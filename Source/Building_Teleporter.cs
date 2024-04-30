@@ -38,14 +38,7 @@ namespace BetterRimworlds.TeleporterRoom
         protected TeleporterBuffer teleporterBuffer;
         protected TeleporterNetwork TeleporterNetwork;
 
-        protected static Texture2D UI_ADD_RESOURCES;
-        protected static Texture2D UI_ADD_COLONIST;
-
         protected static Texture2D UI_GATE_IN;
-        protected static Texture2D UI_GATE_OUT;
-
-        protected static Texture2D UI_POWER_UP;
-        protected static Texture2D UI_POWER_DOWN;
 
         static Graphic graphicInactive;
 
@@ -64,14 +57,7 @@ namespace BetterRimworlds.TeleporterRoom
 
         static Building_Teleporter()
         {
-            UI_ADD_RESOURCES = ContentFinder<Texture2D>.Get("UI/ADD_RESOURCES", true);
-            UI_ADD_COLONIST = ContentFinder<Texture2D>.Get("UI/ADD_COLONIST", true);
-
             UI_GATE_IN = ContentFinder<Texture2D>.Get("UI/StargateGUI-In", true);
-            UI_GATE_OUT = ContentFinder<Texture2D>.Get("UI/StargateGUI-Out", true );
-
-            UI_POWER_UP = ContentFinder<Texture2D>.Get("UI/PowerUp", true);
-            UI_POWER_DOWN = ContentFinder<Texture2D>.Get("UI/PowerDown", true);
 
         #if RIMWORLD12
             GraphicRequest requestInactive = new GraphicRequest(Type.GetType("Graphic_Single"), "Things/Buildings/Teleporter", ShaderDatabase.DefaultShader, new Vector2(3, 3), Color.white, Color.white, new GraphicData(), 0, null);
