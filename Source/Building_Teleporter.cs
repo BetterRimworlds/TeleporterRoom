@@ -112,6 +112,8 @@ namespace BetterRimworlds.TeleporterRoom
             }
 
             TeleporterNetwork.Add(this);
+
+            this.power.powerOutputInt = 1000;
         }
 
         public override void DeSpawn(DestroyMode mode = DestroyMode.Vanish)
@@ -193,17 +195,21 @@ namespace BetterRimworlds.TeleporterRoom
                     currentCapacitorCharge += chargeSpeed;
 
                     float excessPower = this.power.PowerNet.CurrentEnergyGainRate() / CompPower.WattsToWattDaysPerTick;
-                    if (excessPower + (this.power.PowerNet.CurrentStoredEnergy() * 1000) > 5000)
+                    float storedEnergy = this.power.PowerNet.CurrentStoredEnergy();
+                    if (excessPower + (storedEnergy * 1000) > 5000)
                     {
                         // chargeSpeed += 5 - (this.chargeSpeed % 5);
-                        chargeSpeed = (int)Math.Round(this.power.PowerNet.CurrentStoredEnergy() * 0.25 / 10);
+                        // chargeSpeed = (int)Math.Round(storedEnergy * 0.25 / 10);
+                        chargeSpeed = (int)Math.Round(((excessPower - (excessPower % 1_000)) / 1000) + storedEnergy * 0.25 / 10);
                         this.updatePowerDrain();
                     }
-                    else if (excessPower + (this.power.PowerNet.CurrentStoredEnergy() * 1000) > 1000)
+                    else if (excessPower + (storedEnergy * 1000) > 1000)
                     {
                         chargeSpeed += 1;
                         this.updatePowerDrain();
                     }
+
+                    Log.Warning($"Updated power drain for Teleporter {this.Name} to {chargeSpeed}. Excess Power: {excessPower}. Stored Energy: {storedEnergy}");
                 }
             }
 
@@ -451,6 +457,7 @@ namespace BetterRimworlds.TeleporterRoom
             if (isRemoteTeleporter == false)
             {
                 teleporter.Teleport(this, true);
+            this.power.powerOutputInt = 1000;
             }
 
             var things = BetterRimworlds.Utilities.findThingsInRoom(localRoom);
@@ -487,6 +494,8 @@ namespace BetterRimworlds.TeleporterRoom
                     }
                 }
             }
+
+            this.power.powerOutputInt = 1000;
 
             this.Rematerialize();
 
