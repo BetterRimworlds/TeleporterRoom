@@ -1,4 +1,4 @@
-# Rimworld Dematerializer
+# Rimworld Teleporter Room
 
 [![Atlantean Teleporter Room Demo](https://raw.githubusercontent.com/BetterRimworlds/TeleporterRoom/trunk/TeleporterRoom/About/Preview.png)](https://youtu.be/tGBTEr2PZH4)
 

@@ -21,22 +21,18 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <OutputPath>/rimworld/1.2/Mods/TeleporterRoom/1.2/Assemblies</OutputPath>
-    <MainPath>/tmp/rimworld/1.2/Mods/TeleporterRoom/1.2/Assemblies</MainPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release v1.3|AnyCPU' ">
     <DefineConstants>RIMWORLD13</DefineConstants>
-    <OutputPath>/rimworld/1.3/Mods/TeleporterRoom/1.3/Assemblies</OutputPath>
-    <MainPath>/rimworld/1.2/Mods/TeleporterRoom/1.3/Assemblies</MainPath>
+    <OutputPath>/rimworld/1.2/Mods/TeleporterRoom/1.3/Assemblies</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release v1.4|AnyCPU' ">
     <DefineConstants>RIMWORLD14</DefineConstants>
-    <OutputPath>/rimworld/1.4/Mods/TeleporterRoom/1.4/Assemblies</OutputPath>
-    <MainPath>/rimworld/1.2/Mods/TeleporterRoom/1.4/Assemblies</MainPath>
+    <OutputPath>/rimworld/1.2/Mods/TeleporterRoom/1.4/Assemblies</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release v1.5|AnyCPU' ">
     <DefineConstants>RIMWORLD15</DefineConstants>
-    <OutputPath>/rimworld/1.5/Mods/TeleporterRoom/1.5/Assemblies</OutputPath>
-    <MainPath>/rimworld/1.2/Mods/TeleporterRoom/1.5/Assemblies</MainPath>
+    <OutputPath>/rimworld/1.2/Mods/TeleporterRoom/1.5/Assemblies</OutputPath>
   </PropertyGroup>
 
   <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Release v1.2|AnyCPU' ">
@@ -163,17 +159,17 @@
     </PackageReference>
   </ItemGroup>
 
-<!--  <ItemGroup>-->
-<!--    <Compile Include="Building_Teleporter.cs" />-->
-<!--    <Compile Include="Dialog_NameTeleporterRoom.cs" />-->
-<!--    <Compile Include="PlaceWorker_OnlyOneBuilding.cs" />-->
-<!--    <Compile Include="PlaceWorker_OnlyOneTeleporterRoom.cs" />-->
+  <ItemGroup>
+    <Compile Include="Building_Teleporter.cs" />
+    <Compile Include="Dialog_NameTeleporterRoom.cs" />
+    <Compile Include="PlaceWorker_OnlyOneBuilding.cs" />
+    <Compile Include="PlaceWorker_OnlyOneTeleporterRoom.cs" />
 <!--    <Compile Include="Settings.cs" />-->
-<!--    <Compile Include="TeleporterBuffer.cs" />-->
-<!--    <Compile Include="TeleporterNetwork.cs" />-->
-<!--    <Compile Include="TeleporterThingDef.cs" />-->
-<!--    <Compile Include="Utilities\FindingThings.cs" />-->
-<!--  </ItemGroup>-->
+    <Compile Include="TeleporterBuffer.cs" />
+    <Compile Include="TeleporterNetwork.cs" />
+    <Compile Include="TeleporterThingDef.cs" />
+    <Compile Include="Utilities\FindingThings.cs" />
+  </ItemGroup>
 
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 
@@ -184,8 +180,6 @@
     </PropertyGroup>
     <Exec Command="cp -rvf $(FilesSource)/* '$(FilesDestination)/../'" />
     <Exec Command="cp '$(FilesSource)/../README.md' '$(FilesDestination)/../'" />
-    <Exec Command="mkdir -p '$(MainPath)'" />
-    <Exec Command="cp -vf $(OutputPath)* '$(MainPath)/'" />
     <Exec Command="unix2dos '$(FilesDestination)/../README.md'" />
   </Target>
 </Project>

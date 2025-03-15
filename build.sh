@@ -22,16 +22,23 @@ function build() {
     for config in "${configurations[@]}"; do
         echo "Building for configuration: $config"
         dotnet msbuild "$solutionPath" /p:Configuration="$config" &
-
-        cp -af /rimworld/1.2/Mods/${MOD} /rimworld/1.3/Mods
-        cp -af /rimworld/1.2/Mods/${MOD} /rimworld/1.4/Mods
-        cp -af /rimworld/1.2/Mods/${MOD} /rimworld/1.5/Mods
     done
+
+    wait  # Blocks until all background jobs finish
+
+    cp -af /rimworld/1.2/Mods/${MOD} /rimworld/1.3/Mods
+    cp -af /rimworld/1.2/Mods/${MOD} /rimworld/1.4/Mods
+    cp -af /rimworld/1.2/Mods/${MOD} /rimworld/1.5/Mods
 
     echo "All builds completed!"
 }
 
 build
+
+if [ "$1" == "1" ]; then
+    echo "Done"
+    exit
+fi
 
 # Watch for changes to .cs files in the directory and subdirectories
 inotifywait --recursive --monitor --format "%e %w%f" \
