@@ -114,7 +114,7 @@ public class Building_Teleporter : Building, IThingHolder
         if (ShowDebugMsg) Log.Warning($"Adding {this.Name} to the Global Teleporter Network...");
         TeleporterNetwork.Add(this);
 
-        this.power.powerOutputInt = 1000;
+        this.power.powerOutputInt = -1000;
     }
 
     public override void DeSpawn(DestroyMode mode = DestroyMode.Vanish)
