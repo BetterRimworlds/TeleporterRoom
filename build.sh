@@ -21,16 +21,17 @@ function build() {
     # Loop through each configuration and build it
     for config in "${configurations[@]}"; do
         echo "Building for configuration: $config"
-        msbuild "$solutionPath" /p:Configuration="$config" &
+        dotnet msbuild "$solutionPath" /p:Configuration="$config" &
+
+        cp -af /rimworld/1.2/Mods/${MOD} /rimworld/1.3/Mods
+        cp -af /rimworld/1.2/Mods/${MOD} /rimworld/1.4/Mods
+        cp -af /rimworld/1.2/Mods/${MOD} /rimworld/1.5/Mods
     done
 
     echo "All builds completed!"
 }
 
 build
-cp -avf /rimworld/1.3/Mods/${MOD}/1.3 /rimworld/1.2/Mods/${MOD}
-cp -avf /rimworld/1.4/Mods/${MOD}/1.4 /rimworld/1.2/Mods/${MOD}
-cp -avf /rimworld/1.5/Mods/${MOD}/1.5 /rimworld/1.2/Mods/${MOD}
 
 # Watch for changes to .cs files in the directory and subdirectories
 inotifywait --recursive --monitor --format "%e %w%f" \
@@ -39,9 +40,5 @@ inotifywait --recursive --monitor --format "%e %w%f" \
     while read changed; do
         echo "Detected change in $changed"
         build
-
-        cp -avf /rimworld/1.3/Mods/${MOD}/1.3 /rimworld/1.2/Mods/${MOD}
-        cp -avf /rimworld/1.4/Mods/${MOD}/1.4 /rimworld/1.2/Mods/${MOD}
-        cp -avf /rimworld/1.5/Mods/${MOD}/1.5 /rimworld/1.2/Mods/${MOD}
     done
 
