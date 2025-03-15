@@ -82,12 +82,15 @@ namespace BetterRimworlds.TeleporterRoom
             {
                 var wall = borderPosition.GetEdifice(map);
 
-                if (wall == null) return false;
+                if (wall == null)
+                {
+                    continue;
+                }
 
                 if ((wall.def != ThingDefOf.Wall || wall.def != ThingDefOf.Door || wall.def.defName != "Teleporter")
-                    && (wall.def.defName != "Teleporter" && wall.Stuff != ThingDefOf.Plasteel))
+                    && (wall.def.defName != "Teleporter" && wall.Stuff != ThingDefOf.Plasteel && wall.def.defName != "Stargate"))
                 {
-                    // Log.Warning(borderPosition + " : " + wall?.def + " (" + wall?.def?.defName + ") Stuff: " + wall?.Stuff?.defName);
+                    Log.Warning(borderPosition + " : " + wall?.def + " (" + wall?.def?.defName + ") Stuff: " + wall?.Stuff?.defName);
                     return false;
                 }
 
