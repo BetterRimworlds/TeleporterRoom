@@ -19,9 +19,10 @@ namespace BetterRimworlds;
 
 public class Utilities
 {
+    private static bool ShowDebugMsg = new TeleporterRoom.Settings().showDebugMessages;
+
     public static List<Thing> findThingsInRoom(Room room)
     {
-        // var room = RegionAndRoomQuery.RoomAt(thing.Position, thing.Map);
         // Log.Error("Find in room 1");
         var things = room.ContainedAndAdjacentThings;
 
@@ -30,7 +31,7 @@ public class Utilities
         {
             if (tempThing.def.category == ThingCategory.Item)
             {
-                // Log.Error("Find in room 2 " + tempThing.def.defName);
+                if (ShowDebugMsg) Log.Error("Find in room 2 " + tempThing.def.defName);
                 actualThings.Add(tempThing);
             }
         }
@@ -40,7 +41,6 @@ public class Utilities
 
     public static List<Pawn> findPawnsInRoom(Room room)
     {
-        // var room = RegionAndRoomQuery.RoomAt(thing.Position, thing.Map);
         var things = room.ContainedAndAdjacentThings;
 
         var pawns = new List<Pawn>();

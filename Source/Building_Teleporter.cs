@@ -30,7 +30,7 @@ public class Building_Teleporter : Building, IThingHolder
     const int ADDITION_DISTANCE = 3;
 
     private int? Countdown = null;
-    public bool PoweringUp = true;
+    private bool ShowDebugMsg = TeleporterRoom.Settings.showDebugMessages;
 
     private Building_Teleporter destination;
 
@@ -111,7 +111,7 @@ public class Building_Teleporter : Building, IThingHolder
             Find.WindowStack.Add(new Dialog_NameTeleporterRoom(this));
         }
 
-        Log.Warning($"Adding {this.Name} to the Global Teleporter Network...");
+        if (ShowDebugMsg) Log.Warning($"Adding {this.Name} to the Global Teleporter Network...");
         TeleporterNetwork.Add(this);
 
         this.power.powerOutputInt = 1000;
@@ -119,7 +119,7 @@ public class Building_Teleporter : Building, IThingHolder
 
     public override void DeSpawn(DestroyMode mode = DestroyMode.Vanish)
     {
-        Log.Warning("Removing " + this.Name + " from the Teleporter Network.");
+        if (ShowDebugMsg) Log.Warning("Removing " + this.Name + " from the Teleporter Network.");
         TeleporterNetwork.Remove(this);
 
         base.DeSpawn(mode);
@@ -127,7 +127,7 @@ public class Building_Teleporter : Building, IThingHolder
 
     public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
     {
-        Log.Warning("Removing " + this.Name + " from the Teleporter Network. 2");
+        if (ShowDebugMsg) Log.Warning("Removing " + this.Name + " from the Teleporter Network. 2");
         TeleporterNetwork.Remove(this);
 
         base.Destroy(mode);
@@ -169,7 +169,7 @@ public class Building_Teleporter : Building, IThingHolder
 
         if (isSolarFlare)
         {
-            Log.Error("A solar flare is occuring...");
+            if (ShowDebugMsg) Log.Error("A solar flare is occuring...");
         }
 
         return isSolarFlare;
@@ -206,7 +206,7 @@ public class Building_Teleporter : Building, IThingHolder
                     this.updatePowerDrain();
                 }
 
-                Log.Warning($"Updated power drain for Teleporter {this.Name} to {chargeSpeed}. Excess Power: {excessPower}. Stored Energy: {storedEnergy}");
+                if (ShowDebugMsg) Log.Warning($"Updated power drain for Teleporter {this.Name} to {chargeSpeed}. Excess Power: {excessPower}. Stored Energy: {storedEnergy}");
             }
         }
 
@@ -506,7 +506,7 @@ public class Building_Teleporter : Building, IThingHolder
 
     private bool Rematerialize()
     {
-        Log.Message("Number of teleporters on this planet: " + TeleporterNetwork.Count);
+        if (ShowDebugMsg) Log.Message("Number of teleporters on this planet: " + TeleporterNetwork.Count);
 
         /* Tuple<int, List<Thing>> **/
         var recallData = this.teleporterBuffer.ToList();
@@ -530,6 +530,7 @@ public class Building_Teleporter : Building, IThingHolder
                 // Readd the unplaced Thing into the stargateBuffer.
                 if (!wasPlaced)
                 {
+                    Messages.Message("Could not teleport " + currentThing.Label, MessageTypeDefOf.RejectInput);
                     Log.Warning("Could not place " + currentThing.Label);
                     this.teleporterBuffer.TryAdd(currentThing);
                 }
@@ -563,12 +564,6 @@ public class Building_Teleporter : Building, IThingHolder
     }
 
     #endregion
-
-    public bool UpdateRequiredPower(float extraPower)
-    {
-        this.power.PowerOutput = -1 * extraPower;
-        return true;
-    }
 
     private void DoBlastVisual()
     {

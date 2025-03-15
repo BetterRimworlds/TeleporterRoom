@@ -164,9 +164,10 @@
     <Compile Include="Dialog_NameTeleporterRoom.cs" />
     <Compile Include="PlaceWorker_OnlyOneBuilding.cs" />
     <Compile Include="PlaceWorker_OnlyOneTeleporterRoom.cs" />
-<!--    <Compile Include="Settings.cs" />-->
+    <Compile Include="Settings.cs" />
     <Compile Include="TeleporterBuffer.cs" />
     <Compile Include="TeleporterNetwork.cs" />
+    <Compile Include="TeleporterRoom.cs" />
     <Compile Include="TeleporterThingDef.cs" />
     <Compile Include="Utilities\FindingThings.cs" />
   </ItemGroup>

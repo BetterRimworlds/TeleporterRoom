@@ -21,6 +21,8 @@ namespace BetterRimworlds.TeleporterRoom;
 
 class PlaceWorker_OnlyOneTeleporterRoom : PlaceWorker_OnlyOneBuilding
 {
+    private static bool ShowDebugMsg = new Settings().showDebugMessages;
+
     public override AcceptanceReport AllowsPlacing(BuildableDef checkingDef, IntVec3 loc, Rot4 rot, Map map, Thing thingToIgnore = null, Thing thing = null)
     {
         List<string> rejectReasons = new List<string>();
@@ -90,7 +92,7 @@ class PlaceWorker_OnlyOneTeleporterRoom : PlaceWorker_OnlyOneBuilding
             if ((wall.def != ThingDefOf.Wall || wall.def != ThingDefOf.Door || wall.def.defName != "Teleporter")
                 && (wall.def.defName != "Teleporter" && wall.Stuff != ThingDefOf.Plasteel && wall.def.defName != "Stargate"))
             {
-                Log.Warning(borderPosition + " : " + wall?.def + " (" + wall?.def?.defName + ") Stuff: " + wall?.Stuff?.defName);
+                if (ShowDebugMsg) Log.Warning(borderPosition + " : " + wall?.def + " (" + wall?.def?.defName + ") Stuff: " + wall?.Stuff?.defName);
                 return false;
             }
 
@@ -106,7 +108,7 @@ class PlaceWorker_OnlyOneTeleporterRoom : PlaceWorker_OnlyOneBuilding
         {
             if (floorCell.GetTerrain(map).defName != "SterileTile")
             {
-                Log.Warning(floorCell + " Terrain Def Name: " + floorCell.GetTerrain(map).defName);
+                if (ShowDebugMsg) Log.Warning(floorCell + " Terrain Def Name: " + floorCell.GetTerrain(map).defName);
                 return false;
             }
         }
