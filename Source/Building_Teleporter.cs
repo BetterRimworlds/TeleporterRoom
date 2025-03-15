@@ -111,6 +111,7 @@ namespace BetterRimworlds.TeleporterRoom
                 Find.WindowStack.Add(new Dialog_NameTeleporterRoom(this));
             }
 
+            Log.Warning($"Adding {this.Name} to the Global Teleporter Network...");
             TeleporterNetwork.Add(this);
 
             this.power.powerOutputInt = 1000;
@@ -137,16 +138,12 @@ namespace BetterRimworlds.TeleporterRoom
 
         public void GetChildHolders(List<IThingHolder> outChildren) => ThingOwnerUtility.AppendThingHoldersFromThings(outChildren, (IList<Thing>) this.GetDirectlyHeldThings());
 
-        // public override string GetInspectString()
-        // {
-        //     this.def.defName = this.Name;
-        //     // float excessPower = this.power.PowerNet.CurrentEnergyGainRate() / CompPower.WattsToWattDaysPerTick;
-        //     return "Capacitor Charge: " + this?.currentCapacitorCharge + " / " + this?.requiredCapacitorCharge + "\n"
-        //          + "Power needed: " + Math.Round((decimal)(this?.power?.powerOutputInt * -1.0f)) + " W"
-        //         // + "Gain Rate: " + excessPower + "\n"
-        //         // + "Stored Energy: " + this.power.PowerNet.CurrentStoredEnergy()
-        //         ;
-        // }
+        public override string GetInspectString()
+        {
+            return "Capacitor Charge: " + this?.currentCapacitorCharge + " / " + this?.requiredCapacitorCharge + "\n"
+                 + "Power needed: " + Math.Round((decimal)(this?.power?.powerOutputInt * -1.0f)) + " W"
+                ;
+        }
 
         // Saving game
         public override void ExposeData()
