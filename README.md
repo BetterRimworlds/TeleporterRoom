@@ -22,6 +22,16 @@ Conditions for a functional Teleporter Room:
 
 ## Change Log
 
+**v1.1.0: 2025-03-15**
+* **[2024-12-29 02:43:00 CST]** Greatly refactored power accumulation in line with the Stargate. origin/trunk
+* **[2025-03-06 06:21:36 CDT]** [m] Updated the preview image.
+* **[2025-03-15 08:18:22 CDT]** Allow the Stargate to be an allowable wall.
+* **[2025-03-15 08:21:27 CDT]** Implemented the GetInspectString to show charging level.
+* **[2025-03-15 08:32:22 CDT]** Ported to .NET v9.0 and C# v10.0.
+* **[2025-03-15 08:50:53 CDT]** Majorly rewrote the build script.
+* **[2025-03-15 10:16:02 CDT]** Added Settings to hide debug messages.
+* **[2025-03-15 10:16:19 CDT]** Greatly increased the amount of work needed to build.
+
 **v1.0.0: 2024-04-29**
 * Initial Release
 
