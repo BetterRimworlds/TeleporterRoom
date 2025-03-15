@@ -25,7 +25,7 @@
         <specialDisplayRadius>3</specialDisplayRadius>
         <tickerType>Rare</tickerType>
         <statBases>
-            <WorkToBuild>10000</WorkToBuild>
+            <WorkToBuild>120000</WorkToBuild>
             <MaxHitPoints>5000</MaxHitPoints>
             <Flammability>0.0</Flammability>
         </statBases>
