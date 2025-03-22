@@ -1,14 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-    <ThingDef Name="BuildingBase" Abstract="True">
-        <category>Building</category>
-        <soundImpactDefault>BulletImpact_Metal</soundImpactDefault>
-        <selectable>true</selectable>
-        <drawerType>MapMeshAndRealTime</drawerType>
-        <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
-        <repairEffect>Repair</repairEffect>
-    </ThingDef>
-
     <ThingDef Class="BetterRimworlds.TeleporterRoom.TeleporterThingDef" ParentName="BuildingBase">
         <defName>Teleporter</defName>
         <label>Teleporter</label>
@@ -20,6 +11,12 @@
         </graphicData>
         <altitudeLayer>Building</altitudeLayer>
         <passability>Impassable</passability>
+        <category>Building</category>
+        <soundImpactDefault>BulletImpact_Metal</soundImpactDefault>
+        <selectable>true</selectable>
+        <drawerType>MapMeshAndRealTime</drawerType>
+        <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+        <repairEffect>Repair</repairEffect>
         <castEdgeShadows>true</castEdgeShadows>
         <fillPercent>1</fillPercent>
         <specialDisplayRadius>3</specialDisplayRadius>
