@@ -187,7 +187,7 @@ public class Building_Teleporter : Building, IThingHolder
                 this.updatePowerDrain();
             }
 
-            if (this.fullyCharged == false && this.power.PowerOn)
+            if (this.fullyCharged == false)
             {
                 currentCapacitorCharge += chargeSpeed;
 
