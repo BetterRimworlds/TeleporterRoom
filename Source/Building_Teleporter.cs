@@ -212,7 +212,7 @@ public class Building_Teleporter : Building, IThingHolder
             }
         }
 
-        if (this.fullyCharged == true)
+        if (this.fullyCharged == false)
         {
             bool hasNoPower = this.power.PowerNet == null || !this.power.PowerNet.HasActivePowerSource;
             bool hasInsufficientPower = this.power.PowerOn == false;
@@ -253,6 +253,7 @@ public class Building_Teleporter : Building, IThingHolder
 
         if (this.Countdown > 0)
         {
+            if (ShowDebugMsg) Log.Warning($"Countdown for {this.Name}: {this.Countdown}");
             --this.Countdown;
         }
 
@@ -293,7 +294,7 @@ public class Building_Teleporter : Building, IThingHolder
             yield return g;
         }
 
-        if (this.fullyCharged == true)
+        if (this.fullyCharged && this.power != null && this.power.PowerOn)
         {
             //var network = Find.Maps.
 
@@ -333,6 +334,12 @@ public class Building_Teleporter : Building, IThingHolder
             return;
         }
 
+        if (this.power == null || !this.power.PowerOn)
+        {
+            if (ShowDebugMsg) Messages.Message("No active power source. Teleportation cannot proceed.", MessageTypeDefOf.RejectInput);
+            return;  // Early exit if no power
+        }
+
         var localRoom = this.GetRoom();
         var remoteRoom = teleporter.GetRoom();
 
@@ -342,6 +349,8 @@ public class Building_Teleporter : Building, IThingHolder
             Messages.Message(rejectReasons, MessageTypeDefOf.RejectInput);
             return;
         }
+
+        if (ShowDebugMsg) Log.Warning($"Initiating teleport from {this.Name} to {teleporter.Name}. Countdown set to 2.");
 
         this.Countdown ??= 2;
         this.destination = teleporter;
@@ -369,22 +378,22 @@ public class Building_Teleporter : Building, IThingHolder
             rejectReasons += $"The destination Teleporter ({teleporter.Name}) is not inside a Room (use Room Stats tool to debug).\n";
         }
 
-        if (localRoom.CellCount > 300)
+        if (localRoom?.CellCount > 300)
         {
             rejectReasons += "The room of this Teleporter is too big (12x25, or 300 max cells).\n";
         }
 
-        if (remoteRoom.CellCount > 300)
+        if (remoteRoom?.CellCount > 300)
         {
             rejectReasons += $"The room of the destination Teleporter ({teleporter.Name}) is too big (12x25, or 300 max cells).\n";
         }
 
-        if (localRoom.OpenRoofCount > 0)
+        if (localRoom?.OpenRoofCount > 0)
         {
             rejectReasons += $"The room of this Teleporter has {localRoom.OpenRoofCount} missing roof tiles (use Room Stats tool to debug).\n";
         }
 
-        if (remoteRoom.OpenRoofCount > 0)
+        if (remoteRoom?.OpenRoofCount > 0)
         {
             rejectReasons += $"The room of the destination Teleporter ({teleporter.Name}) has {remoteRoom.OpenRoofCount} missing roof tiles (use Room Stats tool to debug).\n";
         }
