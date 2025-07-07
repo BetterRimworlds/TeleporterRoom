@@ -98,16 +98,18 @@ public class Building_Teleporter : Building, IThingHolder
 
         if (this.Name == null)
         {
-            int teleNum = 1;
+            int maxNum = 0;
             foreach (var t in TeleporterNetwork)
             {
-                if (t.Name != "Teleporter" + ++teleNum)
+                if (t.Name != null && t.Name.StartsWith("Teleporter "))
                 {
-                    break;
+                    if (int.TryParse(t.Name.Substring("Teleporter ".Length), out int num))
+                    {
+                        if (num > maxNum) maxNum = num;
+                    }
                 }
             }
-            // this.Name = "Teleporter " + TeleporterNetwork.Count;
-            this.Name = "Teleporter " + teleNum;
+            this.Name = "Teleporter " + (maxNum + 1);
             Find.WindowStack.Add(new Dialog_NameTeleporterRoom(this));
         }
 
