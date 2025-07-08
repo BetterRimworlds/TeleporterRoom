@@ -20,7 +20,7 @@ namespace BetterRimworlds.TeleporterRoom;
  */
 class PlaceWorker_OnlyOneBuilding : PlaceWorker
 {
-    public override AcceptanceReport AllowsPlacing(BuildableDef checkingDef, IntVec3 loc, Rot4 rot, Map map, Thing thingToIgnore = null, Thing thing = null)
+    public override AcceptanceReport AllowsPlacing(BuildableDef checkingDef, IntVec3 loc, Rot4 rot, Map map, Thing? thingToIgnore = null, Thing? thing = null)
     {
         List<Thing> blueprints = map.listerThings.ThingsOfDef(checkingDef.blueprintDef);
         List<Thing> frames = map.listerThings.ThingsOfDef(checkingDef.frameDef);

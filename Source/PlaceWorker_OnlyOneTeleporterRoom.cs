@@ -23,7 +23,7 @@ class PlaceWorker_OnlyOneTeleporterRoom : PlaceWorker_OnlyOneBuilding
 {
     private static bool ShowDebugMsg = new Settings().showDebugMessages;
 
-    public override AcceptanceReport AllowsPlacing(BuildableDef checkingDef, IntVec3 loc, Rot4 rot, Map map, Thing thingToIgnore = null, Thing thing = null)
+    public override AcceptanceReport AllowsPlacing(BuildableDef checkingDef, IntVec3 loc, Rot4 rot, Map map, Thing? thingToIgnore = null, Thing thing = null)
     {
         List<string> rejectReasons = new List<string>();
 

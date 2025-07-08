@@ -21,7 +21,7 @@ using RimWorld;
 namespace BetterRimworlds.TeleporterRoom;
 
 [StaticConstructorOnStartup]
-#if RIMWORLD15
+#if RIMWORLD15 || RIMWORLD16
 public class Building_Teleporter : Building, IThingHolder, IRenameable
 #else
 public class Building_Teleporter : Building, IThingHolder
@@ -539,7 +539,7 @@ public class Building_Teleporter : Building, IThingHolder
         recallData.Clear();
 
         // Tell the MapDrawer that here is something that's changed
-        #if RIMWORLD15
+        #if RIMWORLD15 || RIMWORLD16
         Find.CurrentMap.mapDrawer.MapMeshDirty(Position, MapMeshFlagDefOf.Things, true, false);
         #else
         Find.CurrentMap.mapDrawer.MapMeshDirty(Position, MapMeshFlag.Things, true, false);

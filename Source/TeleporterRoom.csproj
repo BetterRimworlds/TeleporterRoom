@@ -30,6 +30,11 @@
     <DefineConstants>RIMWORLD15</DefineConstants>
     <OutputPath>/rimworld/1.2/Mods/TeleporterRoom/1.5/Assemblies</OutputPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Release v1.6'">
+    <DefineConstants>RIMWORLD16</DefineConstants>
+    <OutputPath>/rimworld/1.2/Mods/TeleporterRoom/1.6/Assemblies</OutputPath>
+    <TargetFramework Condition="'$(TargetFramework)' == 'net9.0'">net472</TargetFramework>
+  </PropertyGroup>
 
   <!-- Common References -->
   <ItemGroup Condition="'$(TargetFramework)' == 'net472'">
@@ -113,6 +118,24 @@
     </Reference>
     <Reference Include="UnityEngine.IMGUIModule">
       <HintPath>/rimworld/1.5/RimWorldLinux_Data/Managed/UnityEngine.IMGUIModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup Condition="'$(Configuration)' == 'Release v1.6'">
+    <Reference Include="Assembly-CSharp">
+      <HintPath>/rimworld/1.6-steam/RimWorldLinux_Data/Managed/Assembly-CSharp.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>/rimworld/1.6-steam/RimWorldLinux_Data/Managed/UnityEngine.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>/rimworld/1.6-steam/RimWorldLinux_Data/Managed/UnityEngine.CoreModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>/rimworld/1.6-steam/RimWorldLinux_Data/Managed/UnityEngine.IMGUIModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>

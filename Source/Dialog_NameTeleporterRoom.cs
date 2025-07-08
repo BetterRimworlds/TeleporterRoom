@@ -17,7 +17,7 @@ using Verse;
 
 namespace BetterRimworlds.TeleporterRoom;
 
-#if RIMWORLD15
+#if RIMWORLD15 || RIMWORLD16
 public class Dialog_NameTeleporterRoom : Dialog_Rename<Building_Teleporter>
 #else
 public class Dialog_NameTeleporterRoom : Dialog_Rename
@@ -26,7 +26,7 @@ public class Dialog_NameTeleporterRoom : Dialog_Rename
     private readonly Building_Teleporter teleporter;
     private static readonly Regex ValidNameRegex = new Regex(@"^[\w ]+$");
 
-    #if RIMWORLD15
+    #if RIMWORLD15 || RIMWORLD16
     public Dialog_NameTeleporterRoom(Building_Teleporter renaming): base(renaming)
     {
         curName = ((IRenameable)renaming).RenamableLabel;
@@ -41,7 +41,7 @@ public class Dialog_NameTeleporterRoom : Dialog_Rename
 
     protected override int MaxNameLength => 24;
 
-    #if !RIMWORLD15
+    #if !RIMWORLD15 && !RIMWORLD16
     public override void DoWindowContents(Rect inRect)
     {
         var titleRect = new Rect(inRect.x, inRect.y, inRect.width, 40);
