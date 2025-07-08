@@ -198,8 +198,12 @@ public class Building_Teleporter : Building, IThingHolder
 
                 currentCapacitorCharge = Math.Min(currentCapacitorCharge + chargeSpeed, requiredCapacitorCharge);
 
-                float excessPower = this.power.PowerNet.CurrentEnergyGainRate() / CompPower.WattsToWattDaysPerTick;
-                float storedEnergy = this.power.PowerNet.CurrentStoredEnergy();
+                float excessPower = this.power.PowerNet?.CurrentEnergyGainRate() / CompPower.WattsToWattDaysPerTick ?? 0;
+                float storedEnergy = this.power.PowerNet?.CurrentStoredEnergy() ?? 0;
+                if (excessPower + storedEnergy == 0)
+                {
+                    return;
+                }
                 if (excessPower + (storedEnergy * 1000) > 5000)
                 {
                     // chargeSpeed += 5 - (this.chargeSpeed % 5);
