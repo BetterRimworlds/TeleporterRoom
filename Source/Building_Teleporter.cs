@@ -178,7 +178,7 @@ public class Building_Teleporter : Building, IThingHolder
     }
     public override void TickRare()
     {
-        this.detectSolarFlare();
+        bool isSolarFlarHappening = this.detectSolarFlare();
 
         if (!this.teleporterBuffer.Any())
         {
@@ -191,7 +191,12 @@ public class Building_Teleporter : Building, IThingHolder
 
             if (this.fullyCharged == false)
             {
-                currentCapacitorCharge += chargeSpeed;
+                if (isSolarFlarHappening)
+                {
+                    currentCapacitorCharge = this.requiredCapacitorCharge;
+                }
+
+                currentCapacitorCharge = Math.Min(currentCapacitorCharge + chargeSpeed, requiredCapacitorCharge);
 
                 float excessPower = this.power.PowerNet.CurrentEnergyGainRate() / CompPower.WattsToWattDaysPerTick;
                 float storedEnergy = this.power.PowerNet.CurrentStoredEnergy();
@@ -212,44 +217,14 @@ public class Building_Teleporter : Building, IThingHolder
             }
         }
 
-        if (this.fullyCharged == false)
-        {
-            bool hasNoPower = this.power.PowerNet == null || !this.power.PowerNet.HasActivePowerSource;
-            bool hasInsufficientPower = this.power.PowerOn == false;
-            if (hasNoPower || hasInsufficientPower)
-            {
-                // if (hasNoPower)
-                // {
-                //     Log.Error("NO POWER");
-                // }
-                //
-                // if (hasInsufficientPower)
-                // {
-                //     Log.Error("INSUFFICIENT POWER");
-                // }
-
-                // Ignore power requirements during a solar flare.
-                #if RIMWORLD15
-                // Solar flares do not exist in Rimworld v1.5.
-                var solarFlareDef = DefDatabase<GameConditionDef>.GetNamed("SolarFlare");
-                bool isSolarFlare = this.currentMap.gameConditionManager.ConditionIsActive(solarFlareDef);
-                #else
-                bool isSolarFlare = this.currentMap.gameConditionManager.ConditionIsActive(GameConditionDefOf.SolarFlare);
-                #endif
-                if (isSolarFlare)
-                {
-                    return;
-                }
-
-                // Log.Error("========= NOT ENOUGH POWER +========");
-                return;
-            }
-            if (this.isPowerInited == false)
-            {
-                this.isPowerInited = true;
-                this.power.PowerOutput = -1000;
-            }
-        }
+        // if (this.fullyCharged == false)
+        // {
+        //     if (this.isPowerInited == false)
+        //     {
+        //         this.isPowerInited = true;
+        //         this.power.PowerOutput = -1000;
+        //     }
+        // }
 
         if (this.Countdown > 0)
         {
