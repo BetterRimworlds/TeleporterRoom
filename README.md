@@ -22,6 +22,21 @@ Conditions for a functional Teleporter Room:
 
 ## Change Log
 
+**v1.2.0: 2025-07-08**
+* **[2025-07-08 18:31:37 CDT]** General refactorings.
+* **[2025-07-08 18:28:38 CDT]** Dramatically refactored the teleporter room validating mechanism.
+* **[2025-07-08 18:26:17 CDT]** Improvement: Teleporter transmit buttons are now sorted alphabetically.
+* **[2025-07-08 09:16:03 CDT]** Added support for Rimworld v1.6.
+* **[2025-07-08 09:13:25 CDT]** Made the Teleporter unflickable.
+* **[2025-07-08 09:00:13 CDT]** Increased the cost to build Teleporter by 2,500 silver.
+* **[2025-07-08 08:59:35 CDT]** Majorly improved ./build.sh to handle XML changes as well.
+* **[2025-07-08 08:58:41 CDT]** Migrated to a modern dotnet SDK project.
+* **[2025-07-08 08:21:42 CDT]** Refactored the building requirements report.
+* **[2025-07-08 08:20:45 CDT]** Fixed a NULL pointer when the teleporter was not connected to the power grid.
+* **[2025-07-08 08:20:03 CDT]** Refactored the powered-on-during-solar-flares logic.
+* **[2025-07-07 18:27:18 CDT]** Fixed logic relating to secondary teleporters not functioning.
+* **[2025-07-07 13:46:33 CDT]** DeepSeek's bug fix with how new Teleporters are named.
+
 **v1.1.0: 2025-03-15**
 * **[2024-12-29 02:43:00 CST]** Greatly refactored power accumulation in line with the Stargate. origin/trunk
 * **[2025-03-06 06:21:36 CDT]** [m] Updated the preview image.
