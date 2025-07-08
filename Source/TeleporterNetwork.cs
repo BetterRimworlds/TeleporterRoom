@@ -17,7 +17,7 @@ using RimWorld.Planet;
 
 namespace BetterRimworlds.TeleporterRoom;
 
-public class TeleporterNetwork: WorldComponent, IEnumerable
+public class TeleporterNetwork: WorldComponent, IEnumerable<Building_Teleporter>
 {
     private List<Building_Teleporter> network = new List<Building_Teleporter>();
 

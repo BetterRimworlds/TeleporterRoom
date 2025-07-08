@@ -268,7 +268,9 @@ public class Building_Teleporter : Building, IThingHolder
         {
             //var network = Find.Maps.
 
-            foreach (Building_Teleporter teleporter in TeleporterNetwork)
+            foreach (var teleporter in TeleporterNetwork
+                         .Where(t => t != this && t != null && !t.Destroyed)
+                         .OrderBy(t => t.Name))
             {
                 if (teleporter == this)
                 {
