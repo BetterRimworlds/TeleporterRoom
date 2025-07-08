@@ -15,7 +15,6 @@
         <soundImpactDefault>BulletImpact_Metal</soundImpactDefault>
         <selectable>true</selectable>
         <drawerType>MapMeshAndRealTime</drawerType>
-        <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
         <repairEffect>Repair</repairEffect>
         <castEdgeShadows>true</castEdgeShadows>
         <fillPercent>1</fillPercent>
@@ -47,6 +46,7 @@
             <Uranium>150</Uranium>
             <Plasteel>500</Plasteel>
             <Gold>500</Gold>
+            <Silver>2500</Silver>
             <!--<AIPersonaCore>1</AIPersonaCore>-->
             <ComponentIndustrial>25</ComponentIndustrial>
             <ComponentSpacer>5</ComponentSpacer>
