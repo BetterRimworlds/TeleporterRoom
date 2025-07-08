@@ -178,7 +178,7 @@ public class Building_Teleporter : Building, IThingHolder
     }
     public override void TickRare()
     {
-        bool isSolarFlarHappening = this.detectSolarFlare();
+        bool isSolarFlareHappening = this.detectSolarFlare();
 
         if (!this.teleporterBuffer.Any())
         {
@@ -191,7 +191,7 @@ public class Building_Teleporter : Building, IThingHolder
 
             if (this.fullyCharged == false)
             {
-                if (isSolarFlarHappening)
+                if (isSolarFlareHappening)
                 {
                     currentCapacitorCharge = this.requiredCapacitorCharge;
                 }
@@ -220,15 +220,6 @@ public class Building_Teleporter : Building, IThingHolder
                 if (ShowDebugMsg) Log.Warning($"Updated power drain for Teleporter {this.Name} to {chargeSpeed}. Excess Power: {excessPower}. Stored Energy: {storedEnergy}");
             }
         }
-
-        // if (this.fullyCharged == false)
-        // {
-        //     if (this.isPowerInited == false)
-        //     {
-        //         this.isPowerInited = true;
-        //         this.power.PowerOutput = -1000;
-        //     }
-        // }
 
         if (this.Countdown > 0)
         {
