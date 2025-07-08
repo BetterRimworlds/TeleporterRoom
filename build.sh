@@ -19,17 +19,7 @@ configurations=("Release v1.2" "Release v1.3" "Release v1.4" "Release v1.5")
 
 dotnet restore "$solutionPath"
 
-function build() {
-    rm -rf /rimworld/1.2/Mods/${MOD}
-
-    # Loop through each configuration and build it
-    for config in "${configurations[@]}"; do
-        echo "Building for configuration: $config"
-        dotnet build --no-restore "$solutionPath" --configuration "$config" &
-    done
-
-    wait  # Blocks until all background jobs finish
-
+function sync_mod() {
     # Copy over the mod directory.
     rsync -a ${MOD} /rimworld/1.2/Mods/
 
@@ -44,6 +34,20 @@ function build() {
     cp -af /rimworld/1.2/Mods/${MOD} /rimworld/1.3/Mods
     cp -af /rimworld/1.2/Mods/${MOD} /rimworld/1.4/Mods
     cp -af /rimworld/1.2/Mods/${MOD} /rimworld/1.5/Mods
+}
+
+function build() {
+    rm -rf /rimworld/1.2/Mods/${MOD}
+
+    # Loop through each configuration and build it
+    for config in "${configurations[@]}"; do
+        echo "Building for configuration: $config"
+        dotnet build --no-restore "$solutionPath" --configuration "$config" &
+    done
+
+    wait  # Blocks until all background jobs finish
+
+    sync_mod
 
     echo "All builds completed!"
 }
@@ -55,11 +59,16 @@ if [ "$1" == "1" ]; then
     exit
 fi
 
-# Watch for changes to .cs files in the directory and subdirectories
+# Watch for changes to .cs and XML files in the directory and subdirectories
 inotifywait --recursive --monitor --format "%e %w%f" \
-    --event modify,move,create,delete $dir \
-    --include '\.cs$' |
-    while read changed; do
-        echo "Detected change in $changed"
-        build
+    --exclude '/\.idea($|/)' \
+    --event modify,move,create,delete "$dir" "$MOD" |
+    while read event fullpath; do
+        if [[ "$fullpath" == "$dir"* && "$fullpath" == *.cs ]]; then
+            echo "Running build for $fullpath"
+            build
+        elif [[ "$fullpath" == "$MOD"* && "$fullpath" == *.xml ]]; then
+            echo "Running sync_mod for $fullpath"
+            sync_mod
+        fi
     done
