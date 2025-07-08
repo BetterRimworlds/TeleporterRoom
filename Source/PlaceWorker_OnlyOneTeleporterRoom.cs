@@ -25,8 +25,6 @@ class PlaceWorker_OnlyOneTeleporterRoom : PlaceWorker_OnlyOneBuilding
 
     public override AcceptanceReport AllowsPlacing(BuildableDef checkingDef, IntVec3 loc, Rot4 rot, Map map, Thing? thingToIgnore = null, Thing thing = null)
     {
-        List<string> rejectReasons = new List<string>();
-
         List<Thing> blueprints = map.listerThings.ThingsOfDef(checkingDef.blueprintDef);
         List<Thing> frames = map.listerThings.ThingsOfDef(checkingDef.frameDef);
         if (
@@ -44,42 +42,17 @@ class PlaceWorker_OnlyOneTeleporterRoom : PlaceWorker_OnlyOneBuilding
         // Check for the Teleporter Room requirements.
         var room = RegionAndRoomQuery.RoomAt(new IntVec3(loc.x, loc.y, loc.z + 2), map);
 
-        if (room == null || room.CellCount >= 15_000)
-        {
-            rejectReasons.Add("The Teleporter must be placed inside a Room (use Room Stats tool to debug).");
+        string rejectReasons = TeleporterRoomValidator.ValidateRoom(room, null);
 
-            return rejectReasons.Count == 0 ? true : String.Join("\n", rejectReasons);
-        }
-
-        if (room?.CellCount > 300)
-        {
-            rejectReasons.Add($"The room of this Teleporter is too big (12x25, or 300 max cells).");
-        }
-
-        if (room?.OpenRoofCount > 0)
-        {
-            rejectReasons.Add($"The room of this Teleporter has {room?.OpenRoofCount} missing roof tiles (use Room Stats tool to debug).");
-        }
-
-        if (PlaceWorker_OnlyOneTeleporterRoom.isPlasteelWall(map, room) == false)
-        {
-            rejectReasons.Add("The room's walls must be made completely of Plasteel.");
-        }
-
-        if (PlaceWorker_OnlyOneTeleporterRoom.isSterileFloor(map, room) == false)
-        {
-            rejectReasons.Add("The room's floors must be made completely of Sterile Tile.");
-        }
-
-        return rejectReasons.Count == 0 ? true : String.Join("\n", rejectReasons);
+        return (rejectReasons == "OK") ? true : rejectReasons;
     }
 
-    public static bool isPlasteelWall(Map map, Room room)
+    public static bool isPlasteelWall(Room room)
     {
         // Log.Warning("Border Cells: " + String.Join(", ", room.BorderCells));
         foreach (IntVec3 borderPosition in room.BorderCells)
         {
-            var wall = borderPosition.GetEdifice(map);
+            var wall = borderPosition.GetEdifice(room.Map);
 
             if (wall == null)
             {
@@ -98,14 +71,14 @@ class PlaceWorker_OnlyOneTeleporterRoom : PlaceWorker_OnlyOneBuilding
         return true;
     }
 
-    public static bool isSterileFloor(Map map, Room room)
+    public static bool isSterileFloor(Room room)
     {
         // Log.Warning("Floor Cells: " + String.Join(", ", room.Cells));
         foreach (IntVec3 floorCell in room.Cells)
         {
-            if (floorCell.GetTerrain(map).defName != "SterileTile")
+            if (floorCell.GetTerrain(room.Map).defName != "SterileTile")
             {
-                if (ShowDebugMsg) Log.Warning(floorCell + " Terrain Def Name: " + floorCell.GetTerrain(map).defName);
+                if (ShowDebugMsg) Log.Warning(floorCell + " Terrain Def Name: " + floorCell.GetTerrain(room.Map).defName);
                 return false;
             }
         }

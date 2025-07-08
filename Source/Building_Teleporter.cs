@@ -315,10 +315,11 @@ public class Building_Teleporter : Building, IThingHolder
         var localRoom = this.GetRoom();
         var remoteRoom = teleporter.GetRoom();
 
-        var rejectReasons = this.validateTeleporterRooms(localRoom, remoteRoom, teleporter);
-        if (rejectReasons != "OK")
+        string rejectReasons = TeleporterRoomValidator.ValidateRoom(localRoom, this.Name);
+        rejectReasons += "\n" + TeleporterRoomValidator.ValidateRoom(remoteRoom, teleporter.Name);
+        if (rejectReasons != "OK\nOK")
         {
-            Messages.Message(rejectReasons, MessageTypeDefOf.RejectInput);
+            Messages.Message(rejectReasons.Replace("OK", ""), MessageTypeDefOf.RejectInput);
             return;
         }
 
@@ -328,75 +329,13 @@ public class Building_Teleporter : Building, IThingHolder
         this.destination = teleporter;
     }
 
-    public Room GetRoom()
+    public Room? GetRoom()
     {
         var offsetPosition = new IntVec3(2, 0, 2);
         var localRoom = RegionAndRoomQuery.RoomAt(this.Position + offsetPosition, this.Map, RegionType.Set_All);
         // Log.Warning("Offset Position: " + offsetPosition + " | Real Position: " + (this.Position + offsetPosition));
 
         return localRoom;
-    }
-
-    protected string validateTeleporterRooms(Room localRoom, Room remoteRoom, Building_Teleporter teleporter)
-    {
-        string rejectReasons = "";
-        if (localRoom == null)
-        {
-            rejectReasons += "This Teleporter is not inside a Room (use Room Stats tool to debug).\n";
-        }
-
-        if (remoteRoom == null)
-        {
-            rejectReasons += $"The destination Teleporter ({teleporter.Name}) is not inside a Room (use Room Stats tool to debug).\n";
-        }
-
-        if (localRoom?.CellCount > 300)
-        {
-            rejectReasons += "The room of this Teleporter is too big (12x25, or 300 max cells).\n";
-        }
-
-        if (remoteRoom?.CellCount > 300)
-        {
-            rejectReasons += $"The room of the destination Teleporter ({teleporter.Name}) is too big (12x25, or 300 max cells).\n";
-        }
-
-        if (localRoom?.OpenRoofCount > 0)
-        {
-            rejectReasons += $"The room of this Teleporter has {localRoom.OpenRoofCount} missing roof tiles (use Room Stats tool to debug).\n";
-        }
-
-        if (remoteRoom?.OpenRoofCount > 0)
-        {
-            rejectReasons += $"The room of the destination Teleporter ({teleporter.Name}) has {remoteRoom.OpenRoofCount} missing roof tiles (use Room Stats tool to debug).\n";
-        }
-
-        if (PlaceWorker_OnlyOneTeleporterRoom.isPlasteelWall(this.Map, localRoom) == false)
-        {
-            rejectReasons += "This teleporter room's walls are not made completely of Plasteel.\n";
-        }
-
-        if (PlaceWorker_OnlyOneTeleporterRoom.isPlasteelWall(teleporter.Map, remoteRoom) == false)
-        {
-            rejectReasons += "The remote teleporter room's walls are not made completely of Plasteel.\n";
-        }
-
-        if (PlaceWorker_OnlyOneTeleporterRoom.isSterileFloor(this.Map, localRoom) == false)
-        {
-            rejectReasons += "This teleporter room's floors are not made completely of Sterile Tile.\n";
-        }
-
-        if (PlaceWorker_OnlyOneTeleporterRoom.isSterileFloor(teleporter.Map, remoteRoom) == false)
-        {
-            rejectReasons += "The remote teleporter room's floors are not made completely of Sterile Tile.\n";
-        }
-
-        if (rejectReasons == "")
-        {
-            return "OK";
-        }
-
-        // Strip out the last \n.
-        return rejectReasons.Remove(rejectReasons.Length - 1);
     }
 
     public void Teleport(Building_Teleporter teleporter, bool isRemoteTeleporter = false)
@@ -425,8 +364,9 @@ public class Building_Teleporter : Building, IThingHolder
         // Log.Error("Room ID: " + localRoom?.ID);
         // Log.Warning("Local Room info: " + localRoom + " | Remote Room info: " + remoteRoom);
 
-        var rejectReasons = this.validateTeleporterRooms(localRoom, remoteRoom, teleporter);
-        if (rejectReasons != "OK")
+        string rejectReasons = TeleporterRoomValidator.ValidateRoom(localRoom, this.Name);
+        rejectReasons += "\n" + TeleporterRoomValidator.ValidateRoom(remoteRoom, teleporter.Name);
+        if (rejectReasons != "OK\nOK")
         {
             Messages.Message(rejectReasons, MessageTypeDefOf.RejectInput);
             return;
