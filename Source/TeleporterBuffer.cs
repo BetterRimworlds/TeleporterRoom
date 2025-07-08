@@ -67,7 +67,10 @@ public class TeleporterBuffer : ThingOwner<Thing>, IList<Thing>
             return false;
         }
 
-        item.DeSpawn();
+        if (item.Spawned)
+        {
+            item.DeSpawn();
+        }
 
         return true;
     }

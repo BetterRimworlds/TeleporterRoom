@@ -27,8 +27,6 @@ public class Building_Teleporter : Building, IThingHolder, IRenameable
 public class Building_Teleporter : Building, IThingHolder
 #endif
 {
-    const int ADDITION_DISTANCE = 3;
-
     private int? Countdown = null;
     private bool ShowDebugMsg = TeleporterRoom.Settings.showDebugMessages;
 
@@ -45,6 +43,8 @@ public class Building_Teleporter : Building, IThingHolder
     private bool isPowerInited = false;
     CompPowerTrader power;
     // CompProperties_Power powerProps;
+
+    private const int COUNTDOWN_AMOUNT = 3;
 
     int currentCapacitorCharge = 1000;
     int requiredCapacitorCharge = 1000;
@@ -69,11 +69,6 @@ public class Building_Teleporter : Building, IThingHolder
         graphicInactive.Init(requestInactive);
     }
 
-    ~Building_Teleporter()
-    {
-        TeleporterNetwork.Remove(this);
-    }
-
     public override string Label => this.Name ?? "Teleporter";
 
     public override void SpawnSetup(Map map, bool respawningAfterLoad)
@@ -92,16 +87,12 @@ public class Building_Teleporter : Building, IThingHolder
         this.power = base.GetComp<CompPowerTrader>();
         this.teleporterBuffer ??= new TeleporterBuffer(this);
 
-        // this.power = new CompPowerTrader();
-
-        // this.room = RegionAndRoomQuery.RoomAt(this.Position, this.Map);
-
-        if (this.Name == null)
+        if (String.IsNullOrEmpty(this.Name))
         {
             int maxNum = 0;
             foreach (var t in TeleporterNetwork)
             {
-                if (t.Name != null && t.Name.StartsWith("Teleporter "))
+                if (t.Name.StartsWith("Teleporter "))
                 {
                     if (int.TryParse(t.Name.Substring("Teleporter ".Length), out int num))
                     {
@@ -125,14 +116,6 @@ public class Building_Teleporter : Building, IThingHolder
         TeleporterNetwork.Remove(this);
 
         base.DeSpawn(mode);
-    }
-
-    public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
-    {
-        if (ShowDebugMsg) Log.Warning("Removing " + this.Name + " from the Teleporter Network. 2");
-        TeleporterNetwork.Remove(this);
-
-        base.Destroy(mode);
     }
 
     // For displaying contents to the user.
@@ -221,21 +204,17 @@ public class Building_Teleporter : Building, IThingHolder
             }
         }
 
-        if (this.Countdown > 0)
+        if (this.Countdown.HasValue)
         {
             if (ShowDebugMsg) Log.Warning($"Countdown for {this.Name}: {this.Countdown}");
-            --this.Countdown;
-        }
-
-        if (this.Countdown <= 1)
-        {
+            this.Countdown--;
             this.DoBlastVisual();
-        }
 
-        if (this.Countdown <= 0)
-        {
-            this.Teleport(this.destination);
-            this.Countdown = null;
+            if (this.Countdown == 0)
+            {
+                this.Teleport(this.destination);
+                this.Countdown = null;
+            }
         }
 
         base.TickRare();
@@ -437,7 +416,8 @@ public class Building_Teleporter : Building, IThingHolder
 
         if (recallData.Count == 0)
         {
-            Messages.Message("WARNING: The Teleporter buffer was empty!!", MessageTypeDefOf.ThreatBig);
+            if (ShowDebugMsg) Log.Warning("The Teleporter buffer was empty.");
+
             return false;
         }
 
