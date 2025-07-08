@@ -44,32 +44,29 @@ class PlaceWorker_OnlyOneTeleporterRoom : PlaceWorker_OnlyOneBuilding
         // Check for the Teleporter Room requirements.
         var room = RegionAndRoomQuery.RoomAt(new IntVec3(loc.x, loc.y, loc.z + 2), map);
 
-        bool rejected = false;
-        if (room == null || room?.CellCount > 15_000)
+        if (room == null || room.CellCount >= 15_000)
         {
-            rejected = true;
             rejectReasons.Add("The Teleporter must be placed inside a Room (use Room Stats tool to debug).");
+
+            return rejectReasons.Count == 0 ? true : String.Join("\n", rejectReasons);
         }
 
-        if (rejected || room?.CellCount > 300)
+        if (room?.CellCount > 300)
         {
-            rejected = true;
             rejectReasons.Add($"The room of this Teleporter is too big (12x25, or 300 max cells).");
         }
 
-        if (rejected || room?.OpenRoofCount > 0)
+        if (room?.OpenRoofCount > 0)
         {
-            rejected = true;
-
             rejectReasons.Add($"The room of this Teleporter has {room?.OpenRoofCount} missing roof tiles (use Room Stats tool to debug).");
         }
 
-        if (rejected || PlaceWorker_OnlyOneTeleporterRoom.isPlasteelWall(map, room) == false)
+        if (PlaceWorker_OnlyOneTeleporterRoom.isPlasteelWall(map, room) == false)
         {
             rejectReasons.Add("The room's walls must be made completely of Plasteel.");
         }
 
-        if (rejected || PlaceWorker_OnlyOneTeleporterRoom.isSterileFloor(map, room) == false)
+        if (PlaceWorker_OnlyOneTeleporterRoom.isSterileFloor(map, room) == false)
         {
             rejectReasons.Add("The room's floors must be made completely of Sterile Tile.");
         }
